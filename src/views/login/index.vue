@@ -34,8 +34,8 @@ export default {
     }
     return {
       loginForm: {
-        mobile: '',
-        code: ''
+        mobile: '13785616506',
+        code: '246810'
       },
       loginRules: {
         mobile: [
@@ -61,6 +61,8 @@ export default {
               this.loginForm
             )
             .then(res => {
+              // 存数据
+              window.sessionStorage.setItem('bhheadline', JSON.stringify(res.data.data))
               this.$router.push('/')
             })
             .catch(() => {

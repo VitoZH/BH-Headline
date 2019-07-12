@@ -19,16 +19,25 @@ const router = new VueRouter({
   {
     path: '/',
     component: Home,
-    children: [
-      {
-        name: 'welcome',
-        path: '/',
-        component: Welcome
-      }
-    ]
+    children: [{
+      name: 'welcome',
+      path: '/',
+      component: Welcome
+    }]
   },
-  { name: '404', path: '*', component: NotFound }
+  {
+    name: '404',
+    path: '*',
+    component: NotFound
+  }
   ]
+})
+// 设置前置守卫
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') return next()
+  const user = window.sessionStorage.getItem('bhheadline')
+  if (user) return next()
+  next('/login')
 })
 // 导出
 export default router
