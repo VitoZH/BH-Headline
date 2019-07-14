@@ -51,26 +51,42 @@ export default {
   },
   methods: {
     // 整体表单校验
+    // login () {
+    //   this.$refs.loginForm.validate(valid => {
+    //     if (valid) {
+    //       // 提交登陆请求
+    //       this.$http
+    //         .post(
+    //           'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+    //           this.loginForm
+    //         )
+    //         .then(res => {
+    //           // 存数据
+    //           window.sessionStorage.setItem('bhheadline', JSON.stringify(res.data.data))
+    //           this.$router.push('/')
+    //         })
+    //         .catch(() => {
+    //           this.$message.error('手机号或验证码错误')
+    //         })
+    //     } else {
+    //       console.log('登录失败')
+    //       return false
+    //     }
+    //   })
+    // },
     login () {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          // 提交登陆请求
-          this.$http
-            .post(
-              'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
-              this.loginForm
+          try {
+            const res = await this.$http.post('authorizations', this.loginForm)
+            window.sessionStorage.setItem(
+              'bhheadline',
+              JSON.stringify(res.data.data)
             )
-            .then(res => {
-              // 存数据
-              window.sessionStorage.setItem('bhheadline', JSON.stringify(res.data.data))
-              this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message.error('手机号或验证码错误')
-            })
-        } else {
-          console.log('登录失败')
-          return false
+            this.$router.push('/')
+          } catch (error) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     },

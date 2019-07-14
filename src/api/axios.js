@@ -24,7 +24,7 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(response => response, error => {
   // 判断状态码并跳转
   if (error.response.status === 401) {
-    location.hash = '#/login'
+    location.hash = '/login'
   }
   return Promise.reject(error)
 })
