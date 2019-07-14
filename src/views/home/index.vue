@@ -1,8 +1,7 @@
 <template>
   <el-container class="home-container">
     <el-aside class="my-aside" :width="collapse?'5%':'230px'">
-      <div class="logo" :class="{close:collapse}">
-      </div>
+      <div class="logo" :class="{close:collapse}"></div>
       <el-menu
         router
         default-active="/"
@@ -50,15 +49,15 @@
         <span class="text">江苏传智播客教育有限公司</span>
         <el-dropdown style="float:right">
           <span class="el-dropdown-link">
-            <img style="vertical-align:middle" width="30" height="30" src="../../assets/images/avatar.jpg" alt="">
-            <b style="vertical-align:middle">黑马小妹</b>
+            <img style="vertical-align:middle" width="30" height="30" :src="avatar" alt />
+            <b style="vertical-align:middle">{{name}}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
+            <el-dropdown-item @click.native="setting()">
               <i class="el-icon-user-solid"></i>个人设置
             </el-dropdown-item>
-            <el-dropdown-item>
+            <el-dropdown-item @click.native="logout()">
               <i class="el-icon-switch-button"></i>退出登录
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -75,12 +74,26 @@
 export default {
   data () {
     return {
-      collapse: false
+      collapse: false,
+      avatar: '',
+      name: ''
     }
+  },
+  created () {
+    const user = JSON.parse(window.sessionStorage.getItem('bhheadline'))
+    this.avatar = user.photo
+    this.name = user.name
   },
   methods: {
     toggleManu () {
       this.collapse = !this.collapse
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    logout () {
+      window.sessionStorage.removeItem('bhheadline')
+      this.$router.push('/login')
     }
   }
 }
@@ -98,10 +111,11 @@ export default {
     .logo {
       height: 60px;
       text-align: center;
-      background: #002840 url('../../assets/images/logo_admin.png') no-repeat center;
+      background: #002840 url("../../assets/images/logo_admin.png") no-repeat
+        center;
     }
-    .close{
-      background: url('../../assets/images/logo_admin_01.png') no-repeat center;
+    .close {
+      background: url("../../assets/images/logo_admin_01.png") no-repeat center;
       background-size: 36px auto;
     }
   }
