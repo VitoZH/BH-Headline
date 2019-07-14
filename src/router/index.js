@@ -6,6 +6,7 @@ import Login from '@/views/login'
 import Home from '@/views/home'
 import Welcome from '@/views/welcome'
 import NotFound from '@/views/404'
+import Article from '@/views/article'
 // 注册
 Vue.use(VueRouter)
 // 初始化
@@ -23,6 +24,11 @@ const router = new VueRouter({
       name: 'welcome',
       path: '/',
       component: Welcome
+    },
+    {
+      name: 'article',
+      path: '/article',
+      component: Article
     }]
   },
   {
