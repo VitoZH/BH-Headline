@@ -8,11 +8,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 // 导入axios
 import axios from '@/api/axios'
+import components from '@/components'
 Vue.prototype.$http = axios
 // 注册组件
 Vue.use(ELEMENT)
 Vue.config.productionTip = false
-
+Vue.use(components)
 new Vue({
   render: h => h(App),
   router

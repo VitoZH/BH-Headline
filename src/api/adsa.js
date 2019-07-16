@@ -1,24 +1,25 @@
 // 配置axios
 import axios from 'axios'
 import JSONBig from 'json-bigint'
-// 配置自定义实例
+
 const instance = axios.create({
+  // 配置对象  基准路径  头部信息
   baseURL: 'http://ttapi.research.itcast.cn/mp/v1_0/',
+  // headers: {
+  //   // Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('hm74-toutiao')).token
+  // }
   transformResponse: [(data) => {
     if (data) {
-      // 对data进行转换
       return JSONBig.parse(data)
     }
     return data
   }]
-  // headers: {
-  // Authprization: 'Bearer' + JSON.parse(window.sessionStorage.getItem('bhheadline')).token
-  // }
 })
+
 // 请求拦截
 instance.interceptors.request.use(config => {
-  const user = window.sessionStorage.getItem('bhheadline')
-  // 给头部加认证信息
+  // 给头部加上认证信息
+  const user = window.sessionStorage.getItem('hm74-toutiao')
   if (user) {
     config.headers = {
       Authorization: 'Bearer ' + JSON.parse(user).token
@@ -29,11 +30,14 @@ instance.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
+// 响应拦截
 instance.interceptors.response.use(response => response, error => {
-  // 判断状态码并跳转
+  // 做一些事情
   if (error.response && error.response.status === 401) {
-    location.hash = '/login'
+    // hash 哈希   是url后  #开始的字符串
+    location.hash = '#/login'
   }
   return Promise.reject(error)
 })
+
 export default instance
