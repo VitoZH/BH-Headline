@@ -1,5 +1,5 @@
 <template>
-  <el-select :v-value="value">
+  <el-select :value="value" @change="fn">
     <el-option v-for="item in channelOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
   </el-select>
 </template>
@@ -17,6 +17,9 @@ export default {
     this.getChannelOptions()
   },
   methods: {
+    fn (value) {
+      this.$emit('input', value)
+    },
     // 获取频道数据
     async getChannelOptions () {
       // 解构
@@ -24,7 +27,6 @@ export default {
         data: { data }
       } = await this.$http.get('channels')
       this.channelOptions = data.channels
-      console.log(this.reqParams)
     }
   }
 }
