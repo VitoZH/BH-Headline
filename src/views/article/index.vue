@@ -87,12 +87,13 @@ export default {
     return {
       // 提交给后台的筛选数据
       reqParams: {
+        page: 1,
+        per_page: 10,
         status: null,
         channel_id: null,
         begin_pubdate: null,
-        end_pubdate: null,
-        page: 1,
-        per_page: 10
+        end_pubdate: null
+
       },
       // 日期数据
       dateValues: [],
@@ -136,6 +137,7 @@ export default {
     },
     // 搜索
     search () {
+      this.reqParams.page = 1
       this.getArticles()
     },
     // 选择时间处理函数
