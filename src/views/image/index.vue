@@ -18,14 +18,14 @@
           style="float:right;"
         >添加素材</el-button>
 
-        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-          <span>上传组件</span>
+        <el-dialog title="添加素材" :visible.sync="dialogVisible" width="300px">
           <span slot="footer" class="dialog-footer">
             <el-upload
               class="avatar-uploader"
               action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+              :headers="headers"
               :show-file-list="false"
-              :on-success="handleAvatarSuccess"
+              :on-success="handleSuccess"
               name="image"
             >
               <img v-if="imageUrl" :src="imageUrl" class="avatar" />
@@ -78,7 +78,10 @@ export default {
       loading: false,
       dialogVisible: false,
       imageUrl: null,
-      headers: { Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('bhheadline')).token
+      headers: {
+        Authorization:
+          'Bearer ' +
+          JSON.parse(window.sessionStorage.getItem('bhheadline')).token
       }
     }
   },
@@ -88,30 +91,39 @@ export default {
   methods: {
     // 删除
     delImage (id) {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+      this.$confirm('确认删除该图片?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(async () => {
-        await this.$http.delete('user/images/:target' + id)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(async () => {
+          await this.$http.delete('user/images/' + id)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          this.getImages()
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
+    // 切换收藏
     async toggleFav (item) {
-      const { data: { data } } = await this.$http.put('user/images/:target' + item.id, { collect: !item.is_collected })
+      const {
+        data: { data }
+      } = await this.$http.put('user/images/' + item.id, {
+        collect: !item.is_collected
+      })
       // 成功
       this.$message.success('操作成功')
-      item.is_collect = data.collected
+      item.is_collected = data.collect
     },
-    handleAvatarSuccess (res) {
+    // 上传图片成功
+    handleSuccess (res) {
       // 预览
       this.imageUrl = res.data.url
       this.$message.success('上传成功')
