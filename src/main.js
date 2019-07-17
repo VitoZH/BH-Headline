@@ -9,6 +9,8 @@ import router from './router'
 // 导入axios
 import axios from '@/api/axios'
 import components from '@/components'
+// 导入全局css
+import '@/styles/index.less'
 Vue.prototype.$http = axios
 // 注册组件
 Vue.use(ELEMENT)

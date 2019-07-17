@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 .container{
   position: absolute;
   left: 0;

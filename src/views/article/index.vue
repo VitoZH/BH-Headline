@@ -37,7 +37,8 @@
     </el-card>
     <el-card>
       <div slot="header">
-        根据筛选条件共查询到<b>{{total}}</b>条结果
+        根据筛选条件共查询到
+        <b>{{total}}</b>条结果
       </div>
       <el-table :data="articles">
         <el-table-column label="封面">
@@ -69,6 +70,7 @@
       </el-table>
       <div class="box">
         <el-pagination
+          v-if="total>reqParams.per_page"
           background
           layout="prev, pager, next"
           :total="total"
@@ -93,7 +95,6 @@ export default {
         channel_id: null,
         begin_pubdate: null,
         end_pubdate: null
-
       },
       // 日期数据
       dateValues: [],
