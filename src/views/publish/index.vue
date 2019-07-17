@@ -1,0 +1,51 @@
+<template>
+  <div class="container">
+    <el-card>
+      <div slot="header">
+        <my-bread>发布文章</my-bread>
+      </div>
+      <el-form :model="articleForm" label-width="100px">
+        <el-form-item label="标题：">
+          <el-input v-model="articleForm.title" style="width:400px"></el-input>
+        </el-form-item>
+        <el-form-item label="内容："></el-form-item>
+        <el-form-item label="封面：">
+          <el-radio-group v-model="articleForm.cover.type">
+            <el-radio :label="1">单图</el-radio>
+            <el-radio :label="3">三图</el-radio>
+            <el-radio :label="0">无图</el-radio>
+            <el-radio :label="-1">自动</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="频道：">
+          <my-channel v-model="articleForm.channel_id"></my-channel>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      articleForm: {
+        title: '',
+        cover: {
+          type: 1,
+          images: []
+        },
+        channel_id: null
+      }
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.img-btn {
+width: 150px;
+height: 150px;
+border: 1px solid #000;
+}
+</style>
