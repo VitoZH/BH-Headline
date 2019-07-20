@@ -10,6 +10,7 @@ import Article from '@/views/article'
 import Image from '@/views/image'
 import Publish from '@/views/publish'
 import Comment from '@/views/comment'
+import Setting from '@/views/setting'
 // 注册
 Vue.use(VueRouter)
 // 初始化
@@ -47,6 +48,11 @@ const router = new VueRouter({
       name: 'comment',
       path: '/comment',
       component: Comment
+    },
+    {
+      name: 'setting',
+      path: '/setting',
+      component: Setting
     }]
   },
   {

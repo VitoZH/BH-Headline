@@ -49,7 +49,7 @@
         <span class="text">江苏传智播客教育有限公司</span>
         <el-dropdown style="float:right">
           <span class="el-dropdown-link">
-            <img style="vertical-align:middle" width="30" height="30" :src="avatar" alt />
+            <img style="vertical-align:middle;margin-right:10px" width="30" height="30" :src="avatar" alt />
             <b style="vertical-align:middle">{{name}}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import eventBus from '@/eventBus'
 export default {
   data () {
     return {
@@ -83,6 +84,13 @@ export default {
     const user = JSON.parse(window.sessionStorage.getItem('bhheadline'))
     this.avatar = user.photo
     this.name = user.name
+    // 绑定提交用户名事件
+    eventBus.$on('updateName', (name) => {
+      this.name = name
+    })
+    eventBus.$on('updatePhoto', (url) => {
+      this.avatar = url
+    })
   },
   methods: {
     toggleManu () {
